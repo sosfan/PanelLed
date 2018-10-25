@@ -1,0 +1,77 @@
+' Gambas class file
+
+Private Img As Image
+Private DrawArea As DrawingArea
+Private X_pos As Integer
+Private Y_pos As Integer
+Private LedSize As Integer
+Private byndata As Array
+Property DataLeds As Array
+
+Public Sub _new(contenedor As Container, xpos As Integer, ypos As Integer, $hLedSize As Integer)
+  
+  Img = Image.Load("./res/led.png")
+  
+  DrawArea = New DrawingArea(contenedor) As "DrawArea"
+  DrawArea.X = 0
+  DrawArea.Y = 0
+  DrawArea.W = $hLedSize * 100
+  DrawArea.H = $hLedSize * 7
+  DrawArea.Cached = False
+  
+  X_pos = xpos
+  Y_pos = ypos
+  LedSize = $hLedSize
+
+End
+
+Public Sub DrawArea_draw()
+
+  Dim x, y As Integer
+  Dim buff As String
+  
+  For x = 0 To 99
+    For y = 0 To 6
+      Draw.Image(ImgCut(0), X_pos - (LedSize * x), Y_pos + (LedSize * y), LedSize, LedSize)
+      If Object.IsValid(byndata) Then
+        buff = Mid$(byndata[y], x + 1, 1)
+      Select buff
+        Case "1"
+          Draw.Image(ImgCut(1), X_pos - (LedSize * x), Y_pos + (LedSize * y), LedSize, LedSize)
+        Case "0"
+          Draw.Image(ImgCut(0), X_pos - (LedSize * x), Y_pos + (LedSize * y), LedSize, LedSize)
+      End Select
+      Else
+        Draw.Image(ImgCut(0), X_pos - (LedSize * x), Y_pos + (LedSize * y), LedSize, LedSize)
+      Endif
+    Next
+  Next
+  
+End
+
+
+Private Sub ImgCut(pos As Short) As Image
+  
+  Dim b As Byte = 1
+  If pos = 1 Then b = 2
+  Return Img.Copy(0, Img.H - (Img.H / b), Img.W, Img.H / 2)
+  
+End
+
+Public Sub DrawUpdate()
+  
+  DrawArea.Refresh
+  
+End
+
+Private Function DataLeds_Read() As Array
+
+  Return byndata
+
+End
+
+Private Sub DataLeds_Write(Value As Array)
+
+  byndata = value
+
+End

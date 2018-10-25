@@ -1,0 +1,22 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,100,13)
+  Icon = Picture["gambas3-gb-panel-led.xpm"]
+  { TestText TextBox
+    MoveScaled(32,8,45,4)
+  }
+  { Button1 Button
+    MoveScaled(79,8,11,4)
+    Text = ("Test")
+  }
+  { Slider1 Slider
+    MoveScaled(1,8,29,4)
+    MinValue = 40
+    MaxValue = 1000
+    Value = 60
+  }
+  { MyServerSocket #ServerSocket
+    #MoveScaled(2,1)
+  }
+}

@@ -1,0 +1,117 @@
+' Gambas class file
+
+Private MatrixLed As PanelLed
+
+' Private Waiting As Boolean
+' Private $iId As Integer
+
+Public Sub _new()
+  
+  MatrixLed = New PanelLed(Me)
+  
+  MatrixLed.H = 50
+  MatrixLed.W = 1024
+  MatrixLed.X = 0
+  MatrixLed.Y = 0
+  MatrixLed.LedSpeed = 50
+  MatrixLed.Text = "*** " & Application.Title & " <> Version " & Application.Version & "."
+  Me.Title = "ScrollText Object"
+'   listen()
+  
+End
+
+Public Sub Slider1_Change()
+
+  MatrixLed.LedSpeed = Slider1.Value
+
+End
+
+Public Sub Button1_Click()
+
+  MatrixLed.Text = TestText.Text 
+
+End
+' 
+' Private Sub listen()
+'   
+'     'TCP
+'     MyServerSocket.Type = Net.Internet
+'     ' The port to listen to
+'     MyServerSocket.Port = 5000
+'     ' we start listening
+'     MyServerSocket.Listen(0)
+' 
+'   
+' End
+' 
+' Public Sub MyServerSocket_Connection(sHost As String)
+' 
+'   Dim Obj As Socket
+' 
+'   If MyServerSocket.Status <= Net.Inactive Then Return
+'   Print "Conexion solicitada : " & sHost & Chr(13) & Chr(10)
+'   
+'   Obj = MyServerSocket.Accept()
+'   Obj.Blocking = False
+'   Inc $iId
+'   Obj.Tag = [$iId, 0, ""]
+'   
+'   If Obj.Status = Net.Connected Then
+'     Print "Conexion de " & Obj.RemoteHost & ":" & Obj.RemotePort & " aceptada (local port " & Obj.LocalPort & ")" & Chr(13) & Chr(10) 
+'   End If
+'   
+' End
+' 
+' Public Sub Socket_Read()
+' 
+'   Dim sBuf As String
+'   Dim iInd As Integer
+' 
+'   If Last.Status <> Net.Connected Then Return
+'   Read #Last, sBuf, Lof(Last)
+'   Print "Socket #" & Last.Tag[0] & " --> " & sBuf & "\n"
+'   MatrixLed.Text = sBuf
+'   
+'   Last.Tag[1] = 0
+'   Last.Tag[2] = sBuf
+'   
+'   Socket_Write
+'   
+' End
+' 
+' Public Sub Socket_Write()
+'   
+'   Dim hSocket As Socket = Last
+'   Dim iInd As Integer
+'   
+'   'Debug hSocket;; hSocket.Tag
+'   iInd = hSocket.Tag[1]
+'   If iInd < 0 Then Return
+'   
+'   Do
+'     Inc iInd
+'     If iInd > 1 Then
+'       hSocket.Tag[1] = -1
+'       Return
+'     Endif
+'     
+'     'Debug iInd
+'     Try Print #hSocket, "<SUCESS>\n";
+'     If Error Then 
+'       Debug Error.Text
+'       Break
+'     Endif
+'   Loop
+'   
+'   hSocket.Tag[1] = iInd
+'   
+' Catch
+'   
+' End
+' 
+'   
+' Public Sub Form_Close()
+'   
+'   MyServerSocket.Close()
+'   
+' End

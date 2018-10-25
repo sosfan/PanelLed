@@ -1,0 +1,6 @@
+[Component]
+Key=panel_led
+Version=0.0.14
+State=1
+Authors=José Francisco < sos.sempai@gmail.com >
+Requires=gb.form,gb.image,gb.qt4

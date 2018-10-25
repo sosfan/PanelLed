@@ -1,0 +1,27 @@
+# Gambas Project File 3.0
+Title=Matriz Led ScrollText Object
+Startup=FTest
+Icon=gambas3-gb-panel-led.xpm
+Version=0.0.14
+Component=gb.image
+Component=gb.qt4
+Component=gb.form
+Component=gb.net
+Component=gb.net.curl
+Description="Un scroll de texto en leds."
+Authors="José Francisco < sos.sempai@gmail.com >"
+TabSize=2
+Translate=1
+Language=es
+Type=Component
+SourcePath=/home/jose/Escritorio
+Maintainer=José Francisco
+Vendor=gb
+Address=sos.sempai@gmail.com
+License=General Public License
+Prefix=1
+PackageName=gambas3-gb-panel_led-0.0.14
+Packager=1
+Systems=debian
+Groups=debian:"devel"
+Groups=ubuntu:"libs"

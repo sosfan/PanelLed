@@ -1,0 +1,110 @@
+' Gambas class file
+
+Export
+
+Inherits Frame
+
+Private hMatrizled As Panel_led
+Private hScrollText As Timer
+Private hTexto As String 
+Private bufferTexto As String
+Private $hLedSize As Integer = 6
+Private hLedSpeed As Integer = 50
+Property Text As String '' Asigna o retorna la cadena de texto que muestra el control.
+Property LedSpeed As Integer '' Asigna o retorna la velocidad de desplazamiento del control.
+Property H As Integer '' Establece o retorna la altura del control.
+Private arraytext As String[]
+
+
+Private Sub ScrollControl(Value As String)
+  
+  Dim nuevoarray As New String[7]
+  Dim conv1 As New Convertir, contador, pos As Integer
+  hScrollText = New Timer As "hScrollText"
+  hScrollText.Delay = hLedSpeed
+  hScrollText.Enabled = True
+  hTexto = Value
+  If arraytmp Then arraytmp.Clear
+  arraytmp = New String[20]
+  arraytext = New String[7]
+  For contador = 1 To Len(Value)
+    'convertir una a una el caracter de la cadena
+    nuevoarray = conv1.convierteletra(Mid(UCase(hTexto), contador, 1))
+    For pos = 0 To 6
+      'posiciones del arreglo
+      arraytext[pos] = arraytext[pos] & "0" & nuevoarray[pos]
+    Next
+  Next
+  columna = 1
+  
+End
+
+Private columna As Integer = 1
+Private arraytmp As String[]
+Public Sub hScrollText_timer()
+  Dim con As Integer
+  For con = 0 To 6
+    If Len(arraytext[0]) >= columna Then
+    arraytmp[con] = Mid(arraytext[con], columna, 1) & arraytmp[con]
+    Else
+      If Len(arraytmp[0]) = Len(arraytext[0]) + 120 Then 
+        If bufferTexto = hTexto Then
+        Else
+          hTexto = bufferTexto
+        Endif
+        ScrollControl(hTexto)
+        Break
+      Endif
+      arraytmp[con] = "0" & arraytmp[con]
+    Endif
+  Next
+  ' hMatrizled.mostrarled(arraytmp)
+  hMatrizled.DataLeds = arraytmp
+  hMatrizled.DrawUpdate
+  Inc columna
+End
+
+Private Function Text_Read() As String
+
+  Return hTexto
+
+End
+
+Private Sub Text_Write(Value As String)
+
+  If hTexto = "" Then
+    ScrollControl(Value)
+  Endif
+  bufferTexto = Value
+
+End
+
+Private Function LedSpeed_Read() As Integer
+
+  Return hLedSpeed
+
+End
+
+Private Sub LedSpeed_Write(Value As Integer)
+
+  hLedSpeed = Value
+  If Object.IsValid(hScrollText) Then hScrollText.Delay = hLedSpeed
+
+End
+
+Private Function H_Read() As Integer
+
+  Return $hLedSize * 7
+
+End
+
+Private Sub H_Write(Value As Integer)
+
+  $hLedSize = Value / 7
+  Me.Height = Value
+  If Object.IsValid(hMatrizled) Then
+    hMatrizled = Null
+  Endif
+  hMatrizled = New Panel_led(Me, $hLedSize * 99, 0, $hLedSize)
+
+End
